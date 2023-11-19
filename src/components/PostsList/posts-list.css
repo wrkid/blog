@@ -1,0 +1,11 @@
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  justify-content: space-between;
+}
+
+.my-spinner {
+  margin-top: 24px;
+}
+

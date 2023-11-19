@@ -1,0 +1,186 @@
+.post-card {
+  display: flex;
+  background-color: #fff;
+  box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  min-width: 715px;
+  max-width: 941px;
+  margin-top: 26px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.post-card a {
+  text-decoration: none;
+}
+
+.post-card__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 15px 14px 24px 19px;
+  width: 100%;
+}
+
+.post-card__info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.post-card__info__title__header {
+  display: flex;
+}
+
+.post-card__info__title__header .post-card__info__title__header__title{
+  color: #1890FF;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.post-card__info__title__header__likes{
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: #fff;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  padding: 0;
+}
+
+.post-card__info__title__header__likes::before {
+  content: url(../../assets/img/heart.svg);
+  width: 16px;
+  height: 16px;
+  margin-left: 13px;
+  margin-right: 5px;
+}
+
+.post-card__description {
+  display: flex;
+  justify-content: space-between;
+  max-width: 682px;
+  color: var(--text-color, rgba(0, 0, 0, 0.75));
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  word-wrap: break-word;
+}
+
+.post-card__description span {
+  max-width: 540px;
+}
+
+.post-card__author {
+  display: flex;
+  flex-direction: row;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.post-card__author img {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  margin-left: 12px;
+}
+
+.post-card__author__info {
+  display: flex;
+  flex-direction: column;
+  font-family: Inter;
+  align-items: end;
+}
+
+.post-card__author__info__date-of-post {
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+}
+
+.post-card__info__title__tags {
+  display: flex;
+  white-space: nowrap;
+}
+
+.tag {
+  border: 1px solid black;
+  border-radius: 2px;
+  padding: 1px 3px 1px 3px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-family: Inter;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.tag:nth-child(n + 2) {
+  margin-left: 6px;
+}
+
+
+/* Full Article */
+
+.full-article .post-card__description {
+  color: #00000080;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.full-article {
+  margin-bottom: 40px;
+}
+
+.full-article .post-card__content__body {
+  max-width: 660px;
+  word-wrap: break-word;
+}
+
+/* Editting */
+
+.btn {
+  background-color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px;
+  border-radius: 5px;
+}
+
+.edit-buttons .delete {
+  border: 1px solid #F5222D;
+  color: #F5222D;
+}
+
+.edit-buttons .delete:hover {
+  background-color: #F5222D;
+  color: #fff
+}
+
+.edit-buttons .edit {
+  border: 1px solid #52C41A;
+  margin-left: 12px;
+  color: #52C41A;
+}
+
+.edit-buttons .edit:hover {
+  background-color: #52C41A;
+  color: #fff
+}
+
+/* -------- */

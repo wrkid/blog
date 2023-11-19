@@ -1,0 +1,8 @@
+.post-container {
+  display: flex;
+  align-self: center;
+}
+
+.my-spinner {
+  margin-top: 24px;
+}
