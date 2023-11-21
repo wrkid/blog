@@ -1,25 +1,25 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchEditProfile } from "../../store/asyncActions/fetchEditProfile";
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 export default function EditProfile() {
 
   const auth = useSelector(state => state.auth);
 
-  const { username, email, token, error } = auth;
+  const { username, email, error } = auth;
+
+  const token = Cookies.get('auth_realworld_blog')
   
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      username,
-      email 
-    }
+    
   });
 
   const dispatch = useDispatch();
@@ -74,13 +74,13 @@ export default function EditProfile() {
           {/* Username */}
           <label className="auth-form__input">
             <span className="auth-form__input__title">Username</span>
-            <input type="text" {...register('username', _usernameValidation)} placeholder="Username" ></input>
+            <input type="text" {...register('username', _usernameValidation)} placeholder="Username" defaultValue={auth.username}></input>
           </label>
           <span className="error-validation">{errors.username?.message}</span>
           {/* Email */}
           <label className="auth-form__input">
             <span className="auth-form__input__title">Email address</span>
-            <input type="text" {...register('email', _emailValidation)} placeholder="Email Address" ></input>
+            <input type="text" {...register('email', _emailValidation)} placeholder="Email Address" defaultValue={auth.email}></input>
           </label>
           <span className="error-validation">{errors.email?.message}</span>
           {/* New Password */}

@@ -1,4 +1,3 @@
-import Cookies from "js-cookie";
 import { errorCreate, logIn } from "../action-auth";
 
 export const fetchLogIn = (body) => async dispatch => {
@@ -9,7 +8,6 @@ export const fetchLogIn = (body) => async dispatch => {
     }
   };
   try {
-    console.log(data)
     const response = await fetch(`https://blog.kata.academy/api/users/login`, {
       method: "POST",
       headers: {
@@ -28,5 +26,8 @@ export const fetchLogIn = (body) => async dispatch => {
     }
   } catch (err){
     dispatch(errorCreate(err.message));
+    setTimeout(() => {
+      dispatch(errorCreate(false))
+    }, 2000)
   }
 }

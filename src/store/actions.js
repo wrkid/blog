@@ -13,3 +13,7 @@ export const articleClearData = () => ({type: "ARTICLE_CLEAR_DATA"})
 export const articleSearchStopped = () => ({type: "ARTICLE_SEARCH_STOPED"});
 
 export const articleErrorFetching = () => ({type: "ARTICLE_ERROR_FETCHING"});
+
+export const editArticle = (payload) => ({type: "EDIT_ARTICLE", payload});
+
+export const articleEdit = (payload) => ({type: 'ARTICLE_EDIT', payload});

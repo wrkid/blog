@@ -7,6 +7,7 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFullArticle } from "../../store/asyncActions/fetchFullArticle";
 import PostCard from "../PostCard";
+import Cookies from "js-cookie";
 
 export default function FullArticle() {
   const { slug } = useParams();
@@ -17,11 +18,11 @@ export default function FullArticle() {
 
   const isLoaded = useSelector(state => state.fullArticle.stop);
 
-  useEffect(() => {
-    dispatch(fetchFullArticle(slug))
-  }, [])
+  const token = Cookies.get('auth_realworld_blog')//useSelector(state => state.auth.token)
 
-  console.log(props)
+  useEffect(() => {
+    dispatch(fetchFullArticle(slug, token))
+  }, [])
 
   return (
     <div className="post-container">

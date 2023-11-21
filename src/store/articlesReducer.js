@@ -16,6 +16,11 @@ export const articlesReducer = (state = initialState, action) => {
       return initialState;
     case 'ERROR_FETCHING':
       return {...initialState, error: true};
+    case 'EDIT_ARTICLE':
+      const idx = state.data.findIndex(article => article.slug === action.payload.slug);
+      const prevData = state.data;
+      const newData = [...prevData.slice(0, idx),action.payload, ...prevData.slice(idx + 1)]
+      return {...state, data: newData};
     default:
       return state;
   }

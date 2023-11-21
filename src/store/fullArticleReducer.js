@@ -8,7 +8,6 @@ const initialState = {
 export const fullArticleReducer = (state = initialState, action) => {
   switch (action.type) {
     case 'ARTICLE_ADD_DATA':
-      console.log(action.payload)
       return {...state, slug: action.payload.slug, data: action.payload};
     case 'ARTICLE_SEARCH_STOPED':
       return {...state, stop: true}
@@ -16,6 +15,8 @@ export const fullArticleReducer = (state = initialState, action) => {
       return initialState;
     case 'ARTICLE_ERROR_FETCHING':
       return {...initialState, error: true};
+    case 'ARTICLE_EDIT':
+      return {...state, data: action.payload}
     default:
       return state;
   }

@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "../../store/action-auth";
 import Cookies from "js-cookie";
 
+import { fetchArticles } from '../../store/asyncActions/fetchArticles'
+
 export default function Header() {
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
@@ -17,6 +19,7 @@ export default function Header() {
     navigate('/');
     dispatch(logOut());
     Cookies.remove('auth_realworld_blog');
+    dispatch(fetchArticles())
   }
 
   const img = useSelector(state => state.auth.image);
@@ -32,10 +35,10 @@ export default function Header() {
             </button>
           </Link>
           <Link to="/profile">
-            <label className="profile-menu__userinfo">
+            <div className="profile-menu__userinfo">
               <span>{username}</span>
               <img src={img} alt='profile_img'></img>
-            </label>
+            </div>
           </Link>
           <Link onClick={() => handleLogOut()}>
             <button type="button" className="profile-menu__logout--btn">

@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { format } from "date-fns";
 import  Markdown  from "react-markdown";
 
+import { Button, Popconfirm } from 'antd';
+
 import './post-card.css';
 
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-// import heart from '../../assets/img/heart.svg'
+import { fetchLike } from '../../store/asyncActions/fetchLike';
+
+import { fetchUnlike } from '../../store/asyncActions/fetchUnlike';
+import { fetchLikeFull } from "../../store/asyncActions/fetchLikeFull";
+import { fetchUnlikeFull } from "../../store/asyncActions/fetchUnlikeFull";
+import { fetchDeleteArticle } from '../../store/asyncActions/fetchDeleteArticle'
+import Cookies from "js-cookie";
 
 export default function PostCard({props, isCurrent = false}) {
 
   const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
 
-  const isOwner = false;
-  
+  const myUN = useSelector(state => state.auth.username);
+
+  const token = Cookies.get('auth_realworld_blog')//useSelector(state => state.auth.token);
+
+  const isOwner = props.author.username === myUN && isCurrent;
+
+  const { favorited, slug } = props;
+
+  useEffect(() => {
+
+  }, [favorited])
+
   let i = 0;
   const tagList = props.tagList.map(tag => {
     i++;
@@ -38,8 +56,16 @@ export default function PostCard({props, isCurrent = false}) {
 
   const editButtons = isCurrent && isLoggedIn && isOwner ? (
     <div className="edit-buttons">
-      <button className="btn delete">Delete</button>
-      <button className="btn edit">Edit</button>
+      <Popconfirm
+        title="Delete the article"
+        description="Are you sure to delete this task?"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={() => handleDelete()}
+      >
+        <Button danger className='btn delete'>Delete</Button>
+      </Popconfirm>
+      <Link to={`/articles/${slug}/edit`} params={{slug: props.slug}}><button className="btn edit">Edit</button></Link>
     </div>
   ) : null;
 
@@ -47,6 +73,31 @@ export default function PostCard({props, isCurrent = false}) {
   const description = isCurrent ? 
         props.description :
         props.description.length > 219 ? props.description.slice(0, 220).concat('...') : props.description;
+
+  let isLikedStyle = favorited ? "post-card__info__title__header__liked" : "post-card__info__title__header__unliked";
+
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const handleDelete = () => {
+    dispatch(fetchDeleteArticle(slug));
+    navigate('/');
+  }
+
+
+  const handleLike = () => {
+    if (isLoggedIn && !favorited && isCurrent) {
+      dispatch(fetchLikeFull(slug, token))
+    } else if (isLoggedIn && favorited && isCurrent){
+      dispatch(fetchUnlikeFull(slug, token))
+    } else if (isLoggedIn && !favorited) {
+      dispatch(fetchLike(slug, token));
+    } else if (isLoggedIn && favorited) {
+      dispatch(fetchUnlike(slug, token))
+    }
+  };
 
   return (
     <div className={fullArticleStyle}>
@@ -56,7 +107,7 @@ export default function PostCard({props, isCurrent = false}) {
             <div className="post-card__info__title">
               <div className="post-card__info__title__header">
                   {headerTitle}
-                  <button className="post-card__info__title__header__likes">
+                  <button className={isLikedStyle} onClick={() => handleLike()}>
                     <span>{props.favoritesCount}</span>
                   </button>
               </div>

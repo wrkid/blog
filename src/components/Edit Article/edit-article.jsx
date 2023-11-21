@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 
-import './new-article.css'
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchNewArticle } from "../../store/asyncActions/fetchNewArticle";
-import { useNavigate } from "react-router-dom";
+import { fetchEditArticle } from "../../store/asyncActions/fetchEditArticle";
+import { useNavigate, useParams } from "react-router-dom";
 
-export default function NewArticle() {
+export default function EditArticle() {
 
-  const [ tags, setTags ] = useState([
-    {id: 1, value: ''}, 
-  ]);
+  const { slug } = useParams();
 
-  const [ tagsCounter, setTagsCounter ] = useState(1);
+  const { body, title, description, tagList } = useSelector(state =>  state.fullArticle.data)
+
+  let i = 0;
+  const tagsList = tagList.map(tag => {
+    i++;
+    return {id: i, value: tag};
+  })
+
+  const [ tags, setTags ] = useState(tagsList);
+
+  const [ tagsCounter, setTagsCounter ] = useState(tagsList.length);
 
   const {
     register,
@@ -55,7 +62,7 @@ export default function NewArticle() {
     return tags.map(tag => {
       return (
         <div key={tag.id} className="tags-list__tag">
-          <input onChange={(e) => handleTagValue(e, tag.id)} className='tags-input'type="text" placeholder="Tag" />
+          <input defaultValue={tag.value} onChange={(e) => handleTagValue(e, tag.id)} className='tags-input'type="text" placeholder="Tag" />
           <button 
             type="button" 
             className="tags-delete-btn"
@@ -67,35 +74,32 @@ export default function NewArticle() {
 
   const dispatch = useDispatch();
 
-  const token = useSelector(state => state.auth.token);
-
   const navigate = useNavigate()
 
   const onSubmit = (data) => {
     const newData = {...data, 'tagList': getTagsList()}
-    dispatch(fetchNewArticle(newData, token));
-    navigate('/')
+    dispatch(fetchEditArticle(newData, slug));
+    navigate(`/articles/${slug}`)
   }
-
 
   return (
     <div className="create-article">
       <div className="create-article__content">
-        <span className="create-article__content__title">Create new article</span>
+        <span className="create-article__content__title">Edit article</span>
         <form className="new-article-form" onSubmit={handleSubmit(onSubmit)}>
           <label className="new-article-form__title">
             <span>Title</span>
-            <input {...register('title', {required: "введите заголовок статьи"})} className="input__title" type="text" placeholder="Title"></input>
+            <input {...register('title', {required: "введите заголовок статьи"})} defaultValue={title} className="input__title" type="text" placeholder="Title"></input>
           </label>
           <span className="error-validation">{errors.title?.message}</span>
           <label className="new-article-form__short-description">
               <span>Short description</span>
-              <input {...register('description', {required: "введите описание статьи"})} type="text" placeholder="Description"></input>
+              <input {...register('description', {required: "введите описание статьи"})} defaultValue={description} type="text" placeholder="Description"></input>
           </label>
           <span className="error-validation">{errors.description?.message}</span>
           <label className="new-article-form__text">
               <span>Text</span>
-              <textarea {...register('body', {required: 'введите текст статьи'})} placeholder="Text"></textarea>
+              <textarea {...register('body', {required: 'введите текст статьи'})} placeholder="Text" defaultValue={body}></textarea>
           </label>
           <span className="error-validation">{errors.text?.message}</span>
           {/* {tags} */}

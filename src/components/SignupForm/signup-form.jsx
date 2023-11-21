@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./signup-form.css";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchRegistration } from "../../store/asyncActions/fetchRegistration";
+import { notification } from "antd";
 
 export default function SignUpForm() {
 
@@ -14,7 +15,29 @@ export default function SignUpForm() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm()
+  } = useForm();
+
+  const [api, contextHolder] = notification.useNotification();
+
+  const error = useSelector(state => state.auth.error);
+
+  useEffect(() => {
+    if (error) {
+      openNotification();
+    };
+  }, [error])
+
+  const openNotification = () => {
+    api.open({
+      message: 'Something went wrong',
+      description:
+        `${error}`,
+      className: 'custom-class',
+      style: {
+        width: 600,
+      },
+    });
+  };
 
   const dispatch = useDispatch();
 
@@ -22,7 +45,9 @@ export default function SignUpForm() {
 
   const onSubmit = (data) => {
     dispatch(fetchRegistration(data));
-    navigate('/');
+    if (!error) {
+      navigate('/');
+    }
   }
 
   const _usernameValidation = {
@@ -36,7 +61,7 @@ export default function SignUpForm() {
       message: 'максимальная длина 20 символов'
     },
     pattern: {
-      value: (/^[a-zA-Z](?=[\w\.\-]*?\w$)|^[a-zA-Z]$/g),
+      value: (/^[a-zA-Z](?=[\w.-]*?\w$)|^[a-zA-Z]$/g),
       message: "логин не должен содержать некоторых символов"
     }
   };
@@ -44,7 +69,7 @@ export default function SignUpForm() {
   const _emailValidation = {
     required: "введите email",
     pattern: {
-      value: (/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g),
+      value: (/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g),
       message: "введите корректный email"
     },
   };
@@ -74,6 +99,7 @@ export default function SignUpForm() {
 
   return (
     <div className="auth-container">
+      {contextHolder}
       <div className="auth-container__content">
         <div className="auth-container__content__title">Create new account</div>
         <form onSubmit={handleSubmit(onSubmit)} className="auth-form" action="#">

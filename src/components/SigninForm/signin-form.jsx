@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 
+import { notification } from "antd";
+
 import './signin-form'
 
 import { Link, useNavigate } from "react-router-dom";
@@ -17,16 +19,34 @@ export default function SignInForm() {
     formState: { errors },
   } = useForm()
 
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = () => {
+    api.open({
+      message: 'Something went wrong',
+      description:
+        `${error}`,
+      className: 'custom-class',
+      style: {
+        width: 600,
+      },
+    });
+  };
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
   const isSignedIn = useSelector(state => state.auth.isLoggedIn);
+  const error = useSelector(state => state.auth.error)
 
   useEffect(() => {
     if (isSignedIn)
       navigate('/');
-  }, [isSignedIn])
+    if (error) {
+      openNotification();
+    }
+  }, [isSignedIn, error])
 
   const onSubmit = (data) => {
     dispatch(fetchLogIn(data)); 
@@ -54,6 +74,7 @@ export default function SignInForm() {
 
   return (
     <div className="auth-container">
+      {contextHolder}
       <div className="auth-container__content">
         <div className="auth-container__content__title">Sign In</div>
         <form className="auth-form" onSubmit={handleSubmit(onSubmit)}>

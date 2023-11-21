@@ -26,9 +26,15 @@ export const fetchRegistration = (body) => async dispatch => {
       const info = await request_info.json();
       dispatch(logIn(info.user));
     } else {
-      throw Error;
+      const key = Object.keys(json.errors)[0];
+      const value = json.errors[key];
+      const error = key + ' ' + value;
+      throw new Error(error);
     }
   } catch (err){
-    dispatch(errorCreate(err));
+    dispatch(errorCreate(err.message));
+    setTimeout(() => {
+      dispatch(errorCreate(false))
+    }, 2000)
   }
 }

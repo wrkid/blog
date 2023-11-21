@@ -2,7 +2,6 @@ import { applyMiddleware, combineReducers, legacy_createStore as createStore } f
 import thunk from "redux-thunk";
 
 import { articlesReducer } from './articlesReducer';
-import { logging } from "./mws/logging";
 import { fullArticleReducer } from "./fullArticleReducer";
 import { authReducer } from "./authReducer";
 
@@ -12,4 +11,4 @@ const rootReducer = combineReducers({
   auth: authReducer
 });
 
-export const store = createStore(rootReducer, applyMiddleware(logging, thunk));
+export const store = createStore(rootReducer, applyMiddleware(thunk));

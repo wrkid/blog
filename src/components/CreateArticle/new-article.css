@@ -24,7 +24,7 @@
 .new-article-form label {
   display: flex;
   flex-direction: column;
-  margin-bottom: 21px;
+  margin-bottom: 5px;
 }
 
 .new-article-form label span {
@@ -91,3 +91,60 @@
   line-height: 24px;
   height: 168px;
 }
+
+.new-article-form .new-article-form__tags {
+  display: flex;
+  flex-direction: row;
+}
+
+.new-article-form__tags .tags-input {
+  width: 300px;
+  margin-bottom: 8px;
+}
+
+.new-article-form__tags .tags-delete-btn {
+  margin-left: 18px;
+  width: 118px;
+  border: 1px solid #F5222D;
+  color: #F5222D;
+  background-color: #fff;
+}
+
+.new-article-form__tags .tags-delete-btn:hover {
+  background-color: #F5222D;
+  color: #fff;
+}
+
+.tags-list {
+  display: flex;
+  flex-direction: column;
+  border: none;
+  width: 436px;
+}
+
+.tags-list__tag {
+  border: none;
+  display: flex;
+  flex-direction: row;
+}
+
+.new-article-form__tags .new-article-form__tags__add-btn {
+  width: 136px;
+  align-self: flex-end;
+  margin-left: 18px;
+  margin-bottom: 12px;
+  background-color: #fff;
+  border: 1px solid #1890FF;
+  color: #1890FF
+}
+
+.new-article-form__tags .new-article-form__tags__add-btn:hover {
+  background-color: #1890FF;
+  color: #fff;
+}
+
+.error-validation {
+  margin-bottom: 10px;
+}
+
+

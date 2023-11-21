@@ -8,6 +8,7 @@ import PostCard from '../PostCard'
 import MyPagination from "../Pagination";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchArticles } from "../../store/asyncActions/fetchArticles";
+import Cookies from "js-cookie";
 
 export default function PostsList() {
 
@@ -17,9 +18,11 @@ export default function PostsList() {
 
   const isLoaded = useSelector(state => state.articles.stop);
 
+  const token = Cookies.get('auth_realworld_blog')
+
   useEffect(() => {
-    dispatch(fetchArticles(page))
-  }, [dispatch, page])
+    dispatch(fetchArticles(page, token))
+  }, [page])
 
   const articles = useSelector(state => state.articles.data);
 
