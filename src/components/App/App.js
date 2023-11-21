@@ -10,10 +10,10 @@ export default function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (token ) {
+    if ( token ) {
       dispatch(fetchCurrnetUser(token));
     }
-  }, [])
+  }, [token, dispatch])
 
   return (
     <div className="App">

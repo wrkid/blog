@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 import { Spin } from "antd";
 
-import './full-article.css'
+import "./full-article.css";
 import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFullArticle } from "../../store/asyncActions/fetchFullArticle";
@@ -14,20 +14,20 @@ export default function FullArticle() {
 
   const dispatch = useDispatch();
 
-  const props = useSelector(state => state.fullArticle.data);
+  const props = useSelector((state) => state.fullArticle.data);
 
-  const isLoaded = useSelector(state => state.fullArticle.stop);
+  const isLoaded = useSelector((state) => state.fullArticle.stop);
 
-  const token = Cookies.get('auth_realworld_blog')//useSelector(state => state.auth.token)
+  const token = Cookies.get("auth_realworld_blog"); //useSelector(state => state.auth.token)
 
   useEffect(() => {
-    dispatch(fetchFullArticle(slug, token))
-  }, [])
+    dispatch(fetchFullArticle(slug, token));
+  }, []);
 
   return (
     <div className="post-container">
-        {!isLoaded && <Spin  className="my-spinner" size="large"/>}
-        {isLoaded && <PostCard props={props} isCurrent='true'/>}
+      {!isLoaded && <Spin className="my-spinner" size="large" />}
+      {isLoaded && <PostCard props={props} isCurrent="true" />}
     </div>
   );
 }
